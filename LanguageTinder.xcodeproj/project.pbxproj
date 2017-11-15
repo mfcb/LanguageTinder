@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24411A7C1FB3375A00C7ED8F /* Signup_FaceAndVoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24411A7B1FB3375A00C7ED8F /* Signup_FaceAndVoiceViewController.swift */; };
 		2466D2A01FB0834A0037E88C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2466D29F1FB0834A0037E88C /* LoginViewController.swift */; };
 		247960641FAB958F00E20902 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247960631FAB958F00E20902 /* Login.storyboard */; };
 		248755AC1FAB678F0040528F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248755AB1FAB678F0040528F /* AppDelegate.swift */; };
@@ -19,6 +20,9 @@
 		248755CE1FAB678F0040528F /* LanguageTinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248755CD1FAB678F0040528F /* LanguageTinderUITests.swift */; };
 		248755DD1FAB6B510040528F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248755DC1FAB6B510040528F /* ChatViewController.swift */; };
 		249179BD1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 249179BB1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld */; };
+		24C108EB1FB5CCFC001ED95A /* Signup_AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */; };
+		24C108ED1FB5EF55001ED95A /* LoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */; };
+		24C108EF1FB5F444001ED95A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EE1FB5F444001ED95A /* MainTabBarController.swift */; };
 		24DC24D41FACA46900D49B69 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DC24D31FACA46900D49B69 /* SignupViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24411A7B1FB3375A00C7ED8F /* Signup_FaceAndVoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup_FaceAndVoiceViewController.swift; sourceTree = "<group>"; };
 		2466D29F1FB0834A0037E88C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		247960631FAB958F00E20902 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		248755A81FAB678F0040528F /* LanguageTinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageTinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +63,9 @@
 		248755CF1FAB678F0040528F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248755DC1FAB6B510040528F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		249179BC1FAC8EAC00F5779A /* AppDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppDataModel.xcdatamodel; sourceTree = "<group>"; };
+		24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup_AboutViewController.swift; sourceTree = "<group>"; };
+		24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewController.swift; sourceTree = "<group>"; };
+		24C108EE1FB5F444001ED95A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		24DC24D31FACA46900D49B69 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,7 +120,6 @@
 				248755DB1FAB69DC0040528F /* Model */,
 				248755AB1FAB678F0040528F /* AppDelegate.swift */,
 				248755AD1FAB678F0040528F /* ProfileViewController.swift */,
-				24DC24D31FACA46900D49B69 /* SignupViewController.swift */,
 				248755DC1FAB6B510040528F /* ChatViewController.swift */,
 				248755AF1FAB678F0040528F /* MeetupViewController.swift */,
 				248755B11FAB678F0040528F /* Main.storyboard */,
@@ -121,6 +128,11 @@
 				248755B61FAB678F0040528F /* LaunchScreen.storyboard */,
 				248755B91FAB678F0040528F /* Info.plist */,
 				2466D29F1FB0834A0037E88C /* LoginViewController.swift */,
+				24DC24D31FACA46900D49B69 /* SignupViewController.swift */,
+				24411A7B1FB3375A00C7ED8F /* Signup_FaceAndVoiceViewController.swift */,
+				24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */,
+				24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */,
+				24C108EE1FB5F444001ED95A /* MainTabBarController.swift */,
 			);
 			path = LanguageTinder;
 			sourceTree = "<group>";
@@ -287,11 +299,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2466D2A01FB0834A0037E88C /* LoginViewController.swift in Sources */,
+				24C108ED1FB5EF55001ED95A /* LoggedInViewController.swift in Sources */,
+				24C108EF1FB5F444001ED95A /* MainTabBarController.swift in Sources */,
 				24DC24D41FACA46900D49B69 /* SignupViewController.swift in Sources */,
 				249179BD1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld in Sources */,
 				248755B01FAB678F0040528F /* MeetupViewController.swift in Sources */,
+				24C108EB1FB5CCFC001ED95A /* Signup_AboutViewController.swift in Sources */,
 				248755AC1FAB678F0040528F /* AppDelegate.swift in Sources */,
 				248755DD1FAB6B510040528F /* ChatViewController.swift in Sources */,
+				24411A7C1FB3375A00C7ED8F /* Signup_FaceAndVoiceViewController.swift in Sources */,
 				248755AE1FAB678F0040528F /* ProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

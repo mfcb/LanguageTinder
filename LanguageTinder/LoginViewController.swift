@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Interface Builder properties
     @IBOutlet weak var tf_login_email: UITextField!
@@ -22,18 +22,62 @@ class LoginViewController: UIViewController {
     //MARK: Interface Builder actions
     
     @IBAction func loginButtonPressed(_ sender: Any) {
+        loginUser()
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == tf_login_password {
+            loginUser()
+        }
+        return true
+    }
+    
+    func loginUser() {
         guard let user = checkForEmail(withEmail: tf_login_email.text!) else {
             print("User not found in database.")
             return
         }
         if checkPassword(forPassword: tf_login_password.text!, withUser: user) {
+            //password username and password correct, log user in
+            user.setValue(true, forKey: "isLoggedInOnThisDevice")
+            do {
+                try self.managedContext?.save()
+            } catch let error as NSError {
+                print("unable to store user as logged in: \(error)")
+            }
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainViewController = mainStoryboard.instantiateInitialViewController()
-            self.present(mainViewController!, animated: true, completion: nil)
+            let mainViewController = mainStoryboard.instantiateInitialViewController() as! MainTabBarController
+            mainViewController.thisUser = user
+            self.present(mainViewController, animated: true, completion: nil)
         } else {
             return
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //check if we're a returning user who is already logged in
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName:"User")
         
+        fetchRequest.predicate = NSPredicate(format: "isLoggedInOnThisDevice == true")
+        var result = [NSManagedObject]()
+        do {
+            result = try managedContext!.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        if result.count == 1 {
+            //returning user, go to loggedInView
+            print("Number of user results is 1")
+            let loggedInVC = storyboard?.instantiateViewController(withIdentifier: "loggedInViewController") as! LoggedInViewController
+            loggedInVC.user = result[0]
+            print("You have logged in as: \(loggedInVC.user)")
+            self.present(loggedInVC, animated: false, completion: nil)
+            
+        } else {
+            print("Number of user results is \(result.count)")
+        }
     }
     
     override func viewDidLoad() {
@@ -42,6 +86,8 @@ class LoginViewController: UIViewController {
         //set up managed context for persistance
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate!.persistentContainer.viewContext
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

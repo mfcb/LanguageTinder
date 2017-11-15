@@ -24,6 +24,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Login</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need to record your voice!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need a picture of your face!</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

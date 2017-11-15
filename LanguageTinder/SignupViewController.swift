@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
@@ -30,15 +31,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     @IBOutlet weak var label_emailWarning: UILabel!
     @IBOutlet weak var button_signup: UIButton!
     
+    //MARK: properties
+    var managedContext:NSManagedObjectContext?
+    var activeTextField:UIView?
     
+    var recordingSession:AVAudioSession!
+    var recorder:AVAudioRecorder!
     
     
     //MARK: Interface Builder actions
-    
-    @IBAction func userTouchedSignupButton(_ sender: UIButton) {
-        signupUser()
-        self.present(self.storyboard!.instantiateViewController(withIdentifier: "loginViewController"), animated: true, completion: nil)
-    }
     
     
     @IBAction func doneEditing(_ sender: UIBarButtonItem) {
@@ -56,9 +57,17 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             //set email-flag to zero
             validityFlags = validityFlags & 0b01111111
         } else {
-            //entered email is correct
-            label_emailWarning.isHidden = true
-            validityFlags = validityFlags | 0b10000000
+            if checkIfEmailExists(withEmail: sender.text!) {
+                //email exists, cant register
+                label_emailWarning.text = "Entered e-mail address is connected to an account."
+                label_emailWarning.isHidden = false
+                validityFlags = validityFlags & 0b01111111
+            } else {
+                //entered email is correct and not taken yet
+                label_emailWarning.isHidden = true
+                validityFlags = validityFlags | 0b10000000
+            }
+            
         }
     }
     
@@ -101,9 +110,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
     
     
-    
-    
-    
     @IBAction func editingFirstNameEnded(_ sender: UITextField) {
         if sender.text!.count <= 1 {
             //first name too short
@@ -113,22 +119,22 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         }
     }
     
-    @IBAction func editingLastNameEnded(_ sender: UITextField) {
-        if sender.text!.count <= 1 {
-            //last name too short
-            validityFlags = validityFlags & 0b11101111
-        } else {
-            validityFlags = validityFlags | 0b00010000
-        }
+    @IBAction func editingLastNameStarted(_ sender: UITextField) {
+        validityFlags = validityFlags | 0b00010000
     }
     
     
     
+    @IBAction func continueToNextSignupScreen(_ sender: UIButton) {
+        guard tf_lastName.text!.count > 0 else {
+            return
+        }
+        let nextVC = storyboard?.instantiateViewController(withIdentifier: "Signup_About") as! Signup_AboutViewController
+        nextVC.user = createUser()!
+        navigationController?.pushViewController(nextVC, animated: true)
+        
+    }
     
-    //MARK: properties
-    var managedContext:NSManagedObjectContext?
-    var activeTextField:UIView?
-
     //Unsigned integer to test for textfield validity
     //Order of flags: 0b-email-password-firstName-lastName-0000
     var validityFlags:UInt8 = 0b00001111
@@ -136,24 +142,17 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Get the appDelegate to set up CoreData context
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate!.persistentContainer.viewContext
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -173,14 +172,16 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     */
     
     //MARK: - Storage Functionality
-    func signupUser() {
+    func createUser()->NSManagedObject? {
         guard let managedContext = managedContext as NSManagedObjectContext! else {
-            return
+            return nil
         }
         let entity = NSEntityDescription.entity(forEntityName: "User", in: managedContext)!
         
         let user = NSManagedObject(entity:entity, insertInto: managedContext)
         
+        //set uuid
+        user.setValue(UUID(), forKey: "id")
         //set first name and last name
         user.setValue(self.tf_firstName.text, forKeyPath:"firstName")
         user.setValue(self.tf_lastName.text, forKeyPath:"lastName")
@@ -191,20 +192,12 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         //set password
         user.setValue(self.tf_password.text, forKey:"password")
         
-        
-        
-        do {
-            try self.managedContext!.save()
-            
-        } catch let error as NSError {
-            print("Could not save user data. \(error), \(error.userInfo)")
-        }
+        return user
         
     }
     
     //MARK: Textfield Delegate functions
     func textFieldShouldBeginEditing(_ textField: UITextField)->Bool {
-        print("LOL")
         self.activeTextField = textField
         self.tb_doneButton.isEnabled = true
         return true
@@ -218,7 +211,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         if validityFlags == 0b11111111 {
             //all fields filled out correctly
             button_signup.isEnabled = true
@@ -228,8 +221,19 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         }
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == tf_lastName {
+            switchToView(named: "Signup_About", inStoryboardNamed: "Login")
+        }
+        return true
+    }
     
     
+    /*
     @objc func keyboardWillShow(_ notification:Notification) {
         guard let keyboardFrame:NSValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as?  NSValue else {
             print("can't get keyboard frame!")
@@ -260,10 +264,10 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     }
     
     @objc func keyboardWillHide(notification:Notification) {
-        let contentInsets:UIEdgeInsets = .zero
+        let contentInsets:UIEdgeInsets = UIEdgeInsets.zero
         sv_main.contentInset = contentInsets
         sv_main.scrollIndicatorInsets = contentInsets
-    }
+    }*/
     
     //MARK: Text Field validation functions
     func checkEmailValidity(emailString:String) -> Bool {
@@ -272,5 +276,41 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPredicate.evaluate(with: emailString)
     }
-
+    
+    func checkIfEmailExists(withEmail email:String)->Bool {
+        guard let managedContext = self.managedContext as NSManagedObjectContext! else {
+            print("managed context not found")
+            return false
+        }
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName:"User")
+        
+        fetchRequest.predicate = NSPredicate(format: "email == %@", email)
+        var result = [NSManagedObject]()
+        do {
+            result = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        if result.count == 0 {
+            return false // no matching email address found, user does not exist
+        } else {
+            return true // matching email address found, user exists
+        }
+        
+    }
+    
+    func switchToView(named viewName:String, inStoryboardNamed storyBoardName:String) {
+        let viewController:UIViewController = UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: viewName) as! Signup_AboutViewController
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func loadRecordingUI() {
+        
+    }
+    
+    func loadRecordFailUI() {
+        
+    }
 }
