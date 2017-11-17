@@ -20,6 +20,7 @@
 		248755CE1FAB678F0040528F /* LanguageTinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248755CD1FAB678F0040528F /* LanguageTinderUITests.swift */; };
 		248755DD1FAB6B510040528F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248755DC1FAB6B510040528F /* ChatViewController.swift */; };
 		249179BD1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 249179BB1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld */; };
+		24A66B151FBF15FC0060978D /* Signup_LanguageSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A66B141FBF15FC0060978D /* Signup_LanguageSelectViewController.swift */; };
 		24C108EB1FB5CCFC001ED95A /* Signup_AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */; };
 		24C108ED1FB5EF55001ED95A /* LoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */; };
 		24C108EF1FB5F444001ED95A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C108EE1FB5F444001ED95A /* MainTabBarController.swift */; };
@@ -63,6 +64,7 @@
 		248755CF1FAB678F0040528F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		248755DC1FAB6B510040528F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		249179BC1FAC8EAC00F5779A /* AppDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppDataModel.xcdatamodel; sourceTree = "<group>"; };
+		24A66B141FBF15FC0060978D /* Signup_LanguageSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup_LanguageSelectViewController.swift; sourceTree = "<group>"; };
 		24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup_AboutViewController.swift; sourceTree = "<group>"; };
 		24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInViewController.swift; sourceTree = "<group>"; };
 		24C108EE1FB5F444001ED95A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				24C108EA1FB5CCFC001ED95A /* Signup_AboutViewController.swift */,
 				24C108EC1FB5EF55001ED95A /* LoggedInViewController.swift */,
 				24C108EE1FB5F444001ED95A /* MainTabBarController.swift */,
+				24A66B141FBF15FC0060978D /* Signup_LanguageSelectViewController.swift */,
 			);
 			path = LanguageTinder;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				24C108ED1FB5EF55001ED95A /* LoggedInViewController.swift in Sources */,
 				24C108EF1FB5F444001ED95A /* MainTabBarController.swift in Sources */,
 				24DC24D41FACA46900D49B69 /* SignupViewController.swift in Sources */,
+				24A66B151FBF15FC0060978D /* Signup_LanguageSelectViewController.swift in Sources */,
 				249179BD1FAC8EAC00F5779A /* AppDataModel.xcdatamodeld in Sources */,
 				248755B01FAB678F0040528F /* MeetupViewController.swift in Sources */,
 				24C108EB1FB5CCFC001ED95A /* Signup_AboutViewController.swift in Sources */,

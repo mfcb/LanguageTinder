@@ -21,15 +21,15 @@ class Signup_AboutViewController: UIViewController {
     //MARK: Properties
     var user:NSManagedObject!
     let datePicker = UIDatePicker()
-    var birthDate:Date!
+    var birthDate:Date?
     
     //MARK: Interface Builder Actions
     
     @IBAction func continueToNextSignupScreen(_ sender: UIButton) {
-        user.setValue(birthDate, forKey: "birthDate")
+        user.setValue(birthDate!, forKey: "birthDate")
         user.setValue(tf_university.text, forKey: "university")
         user.setValue(tv_bio.text, forKey: "aboutDescription")
-        let nextVC = storyboard?.instantiateViewController(withIdentifier: "Signup_FaceAndVoice") as! Signup_FaceAndVoiceViewController
+        let nextVC = storyboard?.instantiateViewController(withIdentifier: "Signup_LanguageSelect") as! Signup_LanguageSelectViewController
         nextVC.user = user
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -72,6 +72,7 @@ class Signup_AboutViewController: UIViewController {
         tf_birthDate.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         birthDate = datePicker.date
+        
     }
 
     /*
