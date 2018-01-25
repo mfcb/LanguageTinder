@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JUu-kT-nyB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JUu-kT-nyB">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -369,18 +369,12 @@
                                 <action selector="cancelSignup:" destination="JGV-g0-oQi" id="ftY-qP-iz1"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="gCv-rb-rPV">
-                            <connections>
-                                <action selector="doneEditing:" destination="JGV-g0-oQi" id="9TC-w3-xtj"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="button_signup" destination="FmF-bg-WxZ" id="amF-QF-6aN"/>
                         <outlet property="label_emailWarning" destination="CDu-xC-fhm" id="nu0-h1-Mln"/>
                         <outlet property="sv_main" destination="DdY-JW-v38" id="p04-fh-nam"/>
                         <outlet property="tb_cancelButton" destination="ZqU-cP-ePq" id="AwE-As-I3i"/>
-                        <outlet property="tb_doneButton" destination="gCv-rb-rPV" id="T4w-Lj-lA9"/>
                         <outlet property="tf_email" destination="huq-yP-787" id="8mz-p5-035"/>
                         <outlet property="tf_firstName" destination="pBW-kf-cBs" id="6lR-LY-wHQ"/>
                         <outlet property="tf_lastName" destination="MMb-PW-KDl" id="Xsd-cb-kz3"/>
@@ -419,6 +413,9 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="FgO-rh-FW5" id="bxM-yY-BFq"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="University" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kET-nt-mt4">
                                                 <rect key="frame" x="53" y="183" width="109" height="21"/>
@@ -433,6 +430,9 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="FgO-rh-FW5" id="7TZ-iX-Nfz"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

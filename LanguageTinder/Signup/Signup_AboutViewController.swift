@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class Signup_AboutViewController: UIViewController {
+class Signup_AboutViewController: ExtendedUIViewController, UITextFieldDelegate {
     //MARK: Interface Builder Properties
     
     @IBOutlet weak var button_next: UIButton!
@@ -22,6 +22,8 @@ class Signup_AboutViewController: UIViewController {
     var user:NSManagedObject!
     let datePicker = UIDatePicker()
     var birthDate:Date?
+    
+    var currentTextField:UITextField?
     
     //MARK: Interface Builder Actions
     
@@ -37,7 +39,10 @@ class Signup_AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tf_university.inputAccessoryView = keyboardToolBar
+        tf_birthDate.inputAccessoryView = self.keyboardToolBar
         createDatePicker()
+        
         // Do any additional setup after loading the view.
     }
 
@@ -49,31 +54,34 @@ class Signup_AboutViewController: UIViewController {
     func createDatePicker() {
         //format date picker for dates only
         datePicker.datePickerMode = .date
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(birthDateWasSubmitted))
-        toolbar.setItems([doneButton], animated: false)
-        
-        tf_birthDate.inputAccessoryView = toolbar
-        
         tf_birthDate.inputView = datePicker
         
         
     }
-    
-    
-    @objc func birthDateWasSubmitted() {
-        //format the date for output
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        tf_birthDate.text = dateFormatter.string(from: datePicker.date)
-        self.view.endEditing(true)
-        birthDate = datePicker.date
+
+    override func keyboardToolBarDoneButtonWasPressed() {
+        if currentTextField == tf_birthDate {
+            //format the date for output
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            tf_birthDate.text = dateFormatter.string(from: datePicker.date)
+            self.view.endEditing(true)
+            birthDate = datePicker.date
+            print("birth date: \(birthDate)")
+        } else {
+            self.view.endEditing(true)
+        }
         
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == tf_birthDate {
+            print("birthDate")
+        }
+        self.currentTextField = textField
+    }
+    
 
     /*
     // MARK: - Navigation

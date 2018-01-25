@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: ExtendedUIViewController, UITextFieldDelegate {
     
     //MARK: Interface Builder properties
     @IBOutlet weak var tf_login_email: UITextField!
@@ -86,6 +86,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //set up managed context for persistance
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate!.persistentContainer.viewContext
+        
+        //set up custom keyboard
+        tf_login_email.inputAccessoryView = keyboardToolBar
+        tf_login_password.inputAccessoryView = keyboardToolBar
         
         
     }

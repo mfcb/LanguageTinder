@@ -62,7 +62,6 @@ class LoggedInViewController: UIViewController {
                 }
             }
         }
-        let imgThumb = UIImage(contentsOfFile: imgURL.relativePath)
         print("img thumb: \(imgURL.lastPathComponent)")
         //iv_profilePic.image = imgThumb
         let firstName = user.value(forKey: "firstName") as! String

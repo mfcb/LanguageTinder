@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class Signup_LanguageSelectViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
+class Signup_LanguageSelectViewController: ExtendedUIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
     
     

@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class Signup_FaceAndVoiceViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class Signup_FaceAndVoiceViewController: ExtendedUIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //MARK: Interface Builder Properties
     
@@ -55,6 +55,7 @@ class Signup_FaceAndVoiceViewController: UIViewController, AVAudioRecorderDelega
          
         } catch let error as NSError {
             print("Could not save user data. \(error), \(error.userInfo)")
+            print("Error code: \(error.localizedDescription)")
         }
         let loginViewController = self.storyboard!.instantiateViewController(withIdentifier: "loggedInViewController") as! LoggedInViewController
         loginViewController.user = user

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+class SignupViewController: ExtendedUIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     //MARK: Interface Builder properties
     
@@ -26,7 +26,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     @IBOutlet weak var tf_password2: UITextField!
     
     @IBOutlet weak var tb_cancelButton: UIBarButtonItem!
-    @IBOutlet weak var tb_doneButton: UIBarButtonItem!
     
     @IBOutlet weak var label_emailWarning: UILabel!
     @IBOutlet weak var button_signup: UIButton!
@@ -35,8 +34,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     var managedContext:NSManagedObjectContext?
     var activeTextField:UIView?
     
-    var recordingSession:AVAudioSession!
-    var recorder:AVAudioRecorder!
     
     
     //MARK: Interface Builder actions
@@ -145,6 +142,9 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         //Get the appDelegate to set up CoreData context
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate!.persistentContainer.viewContext
+        
+        //set up the custom keyboard inputs
+        setupCustomKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,6 +158,14 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setupCustomKeyboard() {
+        tf_firstName.inputAccessoryView = keyboardToolBar
+        tf_lastName.inputAccessoryView = keyboardToolBar
+        tf_email.inputAccessoryView = keyboardToolBar
+        tf_password.inputAccessoryView = keyboardToolBar
+        tf_password2.inputAccessoryView = keyboardToolBar
     }
     
 
@@ -199,7 +207,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     //MARK: Textfield Delegate functions
     func textFieldShouldBeginEditing(_ textField: UITextField)->Bool {
         self.activeTextField = textField
-        self.tb_doneButton.isEnabled = true
         return true
     }
     
@@ -207,7 +214,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         print("Text view did begin")
         self.activeTextField = textView
         print(activeTextField!)
-        self.tb_doneButton.isEnabled = true
         return true
     }
     
@@ -306,11 +312,4 @@ class SignupViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func loadRecordingUI() {
-        
-    }
-    
-    func loadRecordFailUI() {
-        
-    }
 }
